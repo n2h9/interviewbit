@@ -4,9 +4,11 @@ https://www.interviewbit.com/problems/grid-unique-paths/
 
 A robot is located at the top-left corner of an A x B grid (marked ‘S’ in the diagram below).
 
+```sh
 S * * * * * *
 * * * * * * *
 * * * * * * F
+```
 
 The robot can only move either down or right at any point in time. The robot is trying to reach the bottom-right corner of the grid (marked ‘F’ in the diagram above).
 
