@@ -1,0 +1,8 @@
+https://www.interviewbit.com/problems/reverse-link-list-recursion/
+
+Reverse a linked list using recursion.
+
+Example :
+Given 1->2->3->4->5->NULL,
+
+return 5->4->3->2->1->NULL.
