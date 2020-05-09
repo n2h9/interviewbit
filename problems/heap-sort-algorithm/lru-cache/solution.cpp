@@ -77,11 +77,11 @@ int LRUCacheYellow::get(int key) {
 }
 
 void LRUCacheYellow::set(int key, int value) {
- // printf("set method start last %p\n", this->last);
-  // printf("%lu size ===\n", this->cacheMap.size());
-  // printf("%d capacity ===\n", this->capacity);
+  printf("set method start last %p\n", this->last);
+  printf("%lu size ===\n", this->cacheMap.size());
+  printf("%d capacity ===\n", this->capacity);
   if (this->cacheMap.find(key) != this->cacheMap.end()) {
-    // printf("setting exsisting value %d\n", key);
+    printf("setting exsisting value %d\n", key);
     // so we set value in exsisting index
     // it means that capacity will not changed
     // remove it from list and set it to the top of list
@@ -93,9 +93,9 @@ void LRUCacheYellow::set(int key, int value) {
   }
 
   if (this->cacheMap.size() >= this->capacity) {
-   // printf("setting in full cache; key value %d %d\n", key, value);
-   // printf("last %p\n", this->last);
-   // printf("last key value %d %d\n", this->last->key, this->last->value);
+   printf("setting in full cache; key value %d %d\n", key, value);
+   printf("last %p\n", this->last);
+   printf("last key value %d %d\n", this->last->key, this->last->value);
     // delete last element to free space
     // if (this->last != NULL) {
     cacheNode* node = this->last;
@@ -105,8 +105,14 @@ void LRUCacheYellow::set(int key, int value) {
         prev->next = NULL;
       }
     this->last = prev;
-   // printf("deleting prev last node: key value %d %d\n", node->key, node->value);
-    this->cacheMap.erase(this->cacheMap.find(node->key));
+    printf("deleting prev last node: key value === %d %d\n", node->key, node->value);
+    printf("Value %d \n", this->cacheMap[node->key]->value);
+    for (auto p : this->cacheMap) 
+        std::cout << p.first << "==>" << ((cacheNode*)p.second)->value << "\n"; 
+    // this->cacheMap.erase(this->cacheMap.find(node->key));
+    std::cout << this->cacheMap.find(5)->first;
+    this->cacheMap.erase(5);
+    printf("AFTER ERASE");
     // if we deleteing last which is also first
     if (this->first == node) {
       this->first = NULL;
@@ -117,8 +123,10 @@ void LRUCacheYellow::set(int key, int value) {
 
   // add a new value
   cacheNode* node = new cacheNode(key, value);
-  // printf("add key value %d\n", key);
+  printf("add key value %d %d\n", node->key, node->value);
   this->cacheMap.emplace(key, node);
+  printf("This is value %d\n", this->cacheMap[key]->value);
+  printf("map size %lu\n", this->cacheMap.size());
   if (this->first != NULL) {
     node->next = this->first;
     this->first->prev = node;
@@ -130,7 +138,7 @@ void LRUCacheYellow::set(int key, int value) {
     // it was the first element inserted
     // set last to first
     this->last = node;
-   // printf("set last %p\n", this->last);
+   printf("set last %p\n", this->last);
   }
 }
 
@@ -181,11 +189,54 @@ void testCase2() {
    printf("%d\n", (*c).get(2));
 }
 
+void testCase3() {
+  LRUCache* c = new LRUCache(4);
+  (*c).set(5, 13);
+  (*c).set(9, 6);
+  (*c).set(4, 1);
+  printf("%d\n", (*c).get(4));
+  printf("before set\n");
+  (*c).set(6, 1);
+  printf("before set\n");
+  (*c).set(8, 11);
+  printf("before get\n");
+  printf("%d\n", (*c).get(13));
+  printf("%d\n", (*c).get(1));
+  (*c).set(12, 12);
+  printf("%d\n", (*c).get(10));
+  (*c).set(15, 13);
+  (*c).set(2, 13);
+  (*c).set(7, 5);
+  (*c).set(10, 3);
+  printf("%d\n", (*c).get(6));
+  printf("%d\n", (*c).get(10));
+  (*c).set(15, 14);
+  (*c).set(5, 12);
+  printf("%d\n", (*c).get(5));
+  printf("%d\n", (*c).get(7));
+  printf("%d\n", (*c).get(15));
+  printf("%d\n", (*c).get(5));
+  printf("%d\n", (*c).get(6));
+  printf("%d\n", (*c).get(10));
+  (*c).set(7, 13);
+  printf("%d\n", (*c).get(14));
+  (*c).set(8, 9);
+  printf("%d\n", (*c).get(4));
+  (*c).set(6, 11);
+  printf("%d\n", (*c).get(9));
+  (*c).set(6, 12);
+  printf("%d\n", (*c).get(3));
+  
+}
+
+
 int main()
 {
-  testCase1();
+  // testCase1();
+  // printf("====\n");
+  // testCase2();
   printf("====\n");
-  testCase2();
+  testCase3();
   return 0;
 }
 
