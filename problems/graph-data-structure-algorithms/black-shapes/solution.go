@@ -1,7 +1,5 @@
 package solution
 
-const SHAPE_BYTE = 'X'
-
 /**
  * @input A : array of strings
  *
